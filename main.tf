@@ -108,7 +108,15 @@ resource "aws_route_table" "database" {
     Name = "${local.name}-database"
   })
 }
+#database subnet group
+resource "aws_db_subnet_group" "default" {
+  name       = "${local.name}"
+  subnet_ids = aws_subnet.database[*].id
 
+  tags = {
+    Name = "${local.name}"
+  }
+}
 #routes
 resource "aws_route" "public_route" {
   route_table_id = aws_route_table.public.id
